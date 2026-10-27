@@ -1,0 +1,49 @@
+---
+title: "Snellen screening toy"
+description: "A webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test."
+date: 2026-10-13  # TODO: confirm (date of the first commit)
+categories: [Python, computer vision, WebAssembly]  # TODO: confirm
+image: thumbnail.svg  # TODO: replace with a real screenshot (16:9)
+image-alt: "TODO: describe the screenshot"
+---
+
+[Live demo]{.badge-status}
+
+[Try the demo](../../demos/snellen/index.html){.btn .btn-primary .demo-button}
+<!-- TODO: add a source link if the snellen repo is made public. -->
+
+::: {.callout-warning}
+This is a screening toy, not a medical test. It cannot diagnose anything and does not
+replace an eye examination. If you have any concerns about your eyesight, see an
+optometrist.
+:::
+
+## What it is
+
+A webcam eye test you can run on your own computer. It shows a chart of classic Snellen
+letters, "Tumbling E" shapes or Landolt C rings, sizes them to how far you are from the
+screen, and tests each eye in turn.
+
+The demo runs entirely in the browser: the camera stays on your device and no video is
+uploaded. It needs a webcam and a bank card (or any card the same size), which is used
+as a ruler to measure the screen and calibrate the camera.
+
+## What I built
+
+TODO: your part of it, in your own words: the problem, the approach, and the decisions
+you're proudest of.
+
+## How it works
+
+- The same Python package runs on the desktop and in the browser. In the browser,
+  [Pyodide](https://pyodide.org) runs it with numpy and OpenCV.
+- MediaPipe's Face Landmarker tracks the face; a bank card, held to the screen and
+  then to the forehead, gives the scale for the screen and the camera.
+- Chart sizes come from the same geometry code in both versions, in device pixels.
+
+TODO: add a diagram or screenshots of the three steps (measure the screen, calibrate
+the camera, take the test).
+
+## What I learned
+
+TODO: or remove this section.

@@ -1,0 +1,34 @@
+/*-- scss:defaults --*/
+// TODO: choose brand colours and fonts; these are neutral starting values.
+$primary: #2a6f97;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+/*-- scss:rules --*/
+.hero {
+  padding: 2.5rem 0 1.5rem;
+
+  .lead {
+    max-width: 40rem;
+  }
+}
+
+// Status chips on project pages, e.g. "Live demo" or "Local only".
+.badge-status {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid $primary;
+  color: $primary;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+// Listing thumbnails keep one aspect ratio whatever the image.
+.quarto-listing .card-img-top {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.demo-button {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}

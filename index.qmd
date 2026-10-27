@@ -1,0 +1,27 @@
+---
+title: "TODO: headline (e.g. your name)"
+listing:
+  id: recent
+  contents: projects/*/index.qmd
+  type: grid
+  sort: "date desc"
+  max-items: 3
+  fields: [image, title, description, categories]
+  image-placeholder: images/placeholder.svg
+page-layout: full
+title-block-banner: false
+---
+
+::: {.hero}
+::: {.lead}
+TODO: two or three sentences on who you are, what you build, and what this site is for.
+:::
+
+[See all projects](projects.qmd){.btn .btn-primary}
+[About me](about.qmd){.btn .btn-outline-secondary}
+:::
+
+## Recent projects
+
+::: {#recent}
+:::

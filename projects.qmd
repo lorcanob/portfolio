@@ -1,0 +1,15 @@
+---
+title: "Projects"
+description: "TODO: one line introducing the projects."
+listing:
+  contents: projects/*/index.qmd
+  type: grid
+  sort: "date desc"
+  categories: true
+  sort-ui: false
+  filter-ui: true
+  fields: [image, title, description, categories]
+  image-placeholder: images/placeholder.svg
+page-layout: full
+title-block-banner: false
+---

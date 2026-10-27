@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: _site
+  # Built demos are plain static files: copy them into the site as they are.
+  resources:
+    - demos/**
+  render:
+    - "*.qmd"
+    - "projects/*/index.qmd"
+    - "!projects/_template/"
+
+website:
+  title: "TODO: site title"
+  description: "TODO: one-line description of the site"
+  site-url: "https://lorcanob.github.io/portfolio/"  # TODO: confirm once the repo name is final
+  repo-url: "https://github.com/lorcanob/portfolio"  # TODO: confirm once the repo exists
+  open-graph: true
+  page-navigation: false
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: "https://github.com/lorcanob"
+        aria-label: GitHub
+  page-footer:
+    center: "TODO: footer text (e.g. © year, name)"
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.scss]
+      dark: [darkly, styles.scss]
+    toc: false
+    smooth-scroll: true
+    link-external-newwindow: true
+
+execute:
+  # Pages are static for now; if code cells are added, CI reuses the results in _freeze/.
+  freeze: auto

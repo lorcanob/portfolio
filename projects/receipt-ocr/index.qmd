@@ -1,0 +1,38 @@
+---
+title: "Receipt OCR"
+description: "Petty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month's ledger goes out as a spreadsheet."
+date: 2026-10-16  # TODO: confirm (date of the first commit)
+categories: [Python, LLMs, AWS]  # TODO: confirm
+image: thumbnail.svg  # TODO: replace with a real screenshot (16:9)
+image-alt: "TODO: describe the screenshot"
+---
+
+[Local only]{.badge-status}
+
+<!-- TODO: no public demo yet: the app needs an API key, and the site stays static with
+no secrets. A recorded walkthrough or screenshots could stand in for one. -->
+
+## What it is
+
+Petty-cash receipts for a group of restaurants. Staff photograph receipts, Claude reads
+the shop, date and total, staff check and tag each one, and a manager emails the month's
+ledger as an xlsx file to the head of department.
+
+It runs locally as a small web app for now; AWS comes next.
+
+## What I built
+
+TODO: your part of it, in your own words: the problem, the approach, and the decisions
+you're proudest of.
+
+## How it works
+
+- A model (Claude Haiku or Sonnet) extracts the shop, date and total from each photo,
+  and the result is validated before staff see it.
+- An evaluation command scores the extractors against hand-labelled sample photos.
+
+TODO: add the evaluation results you're happy to publish, and screenshots of the app.
+
+## What I learned
+
+TODO: or remove this section.

@@ -1,0 +1,9 @@
+[project]
+name = "portfolio"
+version = "0.1.0"
+description = "Quarto portfolio site and static demos of projects in ~/code/lorcanob"
+authors = [
+    { name = "lorcanob", email = "13092003+lorcanob@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = []

@@ -1,0 +1,23 @@
+---
+title: "TODO: your name"
+image: images/profile.svg
+image-alt: "TODO: describe the photo"
+about:
+  template: jolla
+  links:
+    - icon: github
+      text: GitHub
+      href: "https://github.com/lorcanob"
+    # TODO: add any other links you want public (LinkedIn, email, CV)
+---
+
+TODO: a short bio: what you do, what you're interested in, and what kind of work you're
+looking for.
+
+## Experience
+
+TODO: roles, organisations and dates, or remove this section.
+
+## Skills
+
+TODO: languages, tools and areas, or remove this section.

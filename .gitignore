@@ -1,0 +1,25 @@
+# Secrets (the site is static and needs none; this is a guard)
+.env
+.env.*
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.direnv/
+
+# Quarto
+/.quarto/
+/_site/
+*_files/
+*.quarto_ipynb
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
+
+**/*.quarto_ipynb
+
+# Local notes
+kickoff-prompt.md

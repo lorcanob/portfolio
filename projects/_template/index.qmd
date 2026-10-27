@@ -1,0 +1,32 @@
+---
+# Copy this folder to projects/<name>/ to start a new project page.
+# Folders starting with "_" aren't rendered, so this one never appears on the site.
+title: "TODO: project name"
+description: "TODO: one-line summary, shown on the listing card"
+date: 2026-01-01  # TODO: when the project started or shipped; listings sort by it
+categories: [TODO]  # e.g. Python, computer vision, web
+image: thumbnail.svg  # TODO: replace with a real screenshot (16:9)
+image-alt: "TODO: describe the screenshot"
+---
+
+[TODO: status (Live demo / Local only / In progress)]{.badge-status}
+
+<!-- TODO: keep whichever links apply, and delete the rest. -->
+[Try the demo](../../demos/TODO/index.html){.btn .btn-primary .demo-button}
+[Source code](https://github.com/lorcanob/TODO){.btn .btn-outline-secondary .demo-button}
+
+## What it is
+
+TODO: what the project does and who it's for, in two or three sentences.
+
+## What I built
+
+TODO: your part of it: the problem, the approach, and the interesting decisions.
+
+## How it works
+
+TODO: the main pieces and how they fit together. A diagram or screenshot helps here.
+
+## What I learned
+
+TODO: or remove this section.
