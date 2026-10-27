@@ -2,17 +2,19 @@
 title: "Receipt OCR"
 description: "Petty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month's ledger goes out as a spreadsheet."
 date: 2026-10-16
-categories: [Python, Computer Vision, LLMs, AWS]
+categories: [Python, Computer Vision, OCR, LLMs, AWS]
 image: receipt.webp
 image-alt: Simplifying data entry for restaurant staff
 ---
 
 [Local only]{.badge-status}
 
-<!-- TODO: no public demo yet: the app needs an API key, and the site stays static with
-no secrets. A recorded walkthrough or screenshots could stand in for one. -->
+::: {.content-hidden}
+TODO: no public demo yet: the app needs an API key, and the site stays static with
+no secrets. A recorded walkthrough or screenshots could stand in for one.
 
 TODO: add the evaluation results you're happy to publish, and screenshots of the app.
+:::
 
 ## What it is
 

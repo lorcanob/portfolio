@@ -2,7 +2,7 @@
 title: "Snellen screening toy"
 description: "A webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test."
 date: 2026-10-13
-categories: [Python, Computer Vision, MediaPipe, OpenCV]
+categories: [Python, Computer Vision, MediaPipe, OpenCV, Medical]
 image: eye_1.webp
 image-alt: "Directing the future of preventative eye care"
 ---
@@ -10,10 +10,13 @@ image-alt: "Directing the future of preventative eye care"
 [Live demo]{.badge-status}
 
 [Try the demo](../../demos/snellen/index.html){.btn .btn-primary .demo-button}
-<!-- TODO: add a source link if the snellen repo is made public. -->
+
+::: {.content-hidden}
+TODO: add a source link if the snellen repo is made public.
 
 TODO: add a diagram or screenshots of the three steps (measure the screen, calibrate
 the camera, take the test).
+:::
 
 ::: {.callout-warning}
 This is a screening toy, not a medical test. It cannot diagnose anything and does not

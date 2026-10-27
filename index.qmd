@@ -1,5 +1,5 @@
 ---
-title: "Lorcan Odufuwa-Bolger's Personal Projects"
+title: "Lorcan's Personal Projects"
 listing:
   id: recent
   contents: projects/*/index.qmd
@@ -14,7 +14,7 @@ title-block-banner: false
 
 ::: {.hero}
 ::: {.lead}
-I'm a data scientist, keen to root out overlooked
+A data scientist keen to root out overlooked
 applications for lightweight AI solutions in everyday problems
 :::
 
