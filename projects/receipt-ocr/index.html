@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2026-10-16">
 <meta name="description" content="Petty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.">
 
-<title>Receipt OCR – TODO: site title</title>
+<title>Receipt OCR – My Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -49,9 +49,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0b1706b5a2e5be7bec04d9262feeb417.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-693478bb3d1a18757b6fd036f1cb413f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-0b1706b5a2e5be7bec04d9262feeb417.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3a7da6518887aa47afbf2bcd4f8bd530.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b7590b0eb7ddd29b5e9d4a94d4f6127d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-3a7da6518887aa47afbf2bcd4f8bd530.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,11 +82,11 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 
 
-<meta property="og:title" content="Receipt OCR – TODO: site title">
+<meta property="og:title" content="Receipt OCR – My Portfolio">
 <meta property="og:description" content="Petty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.">
-<meta property="og:image" content="https://lorcanob.github.io/portfolio/projects/receipt-ocr/thumbnail.svg">
-<meta property="og:site_name" content="TODO: site title">
-<meta property="og:image:alt" content="TODO: describe the screenshot">
+<meta property="og:image" content="https://lorcanob.github.io/portfolio/projects/receipt-ocr/receipt.webp">
+<meta property="og:site_name" content="My Portfolio">
+<meta property="og:image:alt" content="Simplifying data entry for restaurant staff">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -259,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">TODO: site title</span>
+    <span class="navbar-title">My Portfolio</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -309,6 +309,7 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="title">Receipt OCR</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Python</div>
+    <div class="quarto-category">Computer Vision</div>
     <div class="quarto-category">LLMs</div>
     <div class="quarto-category">AWS</div>
   </div>
@@ -342,6 +343,7 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="badge-status">Local only</span></p>
 <!-- TODO: no public demo yet: the app needs an API key, and the site stays static with
 no secrets. A recorded walkthrough or screenshots could stand in for one. -->
+<p>TODO: add the evaluation results you’re happy to publish, and screenshots of the app.</p>
 <section id="what-it-is" class="level2">
 <h2 class="anchored" data-anchor-id="what-it-is">What it is</h2>
 <p>Petty-cash receipts for a group of restaurants. Staff photograph receipts, Claude reads the shop, date and total, staff check and tag each one, and a manager emails the month’s ledger as an xlsx file to the head of department.</p>
@@ -349,7 +351,8 @@ no secrets. A recorded walkthrough or screenshots could stand in for one. -->
 </section>
 <section id="what-i-built" class="level2">
 <h2 class="anchored" data-anchor-id="what-i-built">What I built</h2>
-<p>TODO: your part of it, in your own words: the problem, the approach, and the decisions you’re proudest of.</p>
+<p>Many small businesses in Japan still operate their monthly budgeting using data manually entered by fatigued shop employees who often aren’t trained in spreadsheet formats and standards, leading to the digital equivalent of a hoarder’s cluttered file system.</p>
+<p>This project aimed to address these pain points in the simplest manner possible to reduce error at the entry stage by employees, and to reduce the headache for managers who would often spend hours untangling a spreadsheet that has had its formatting and save encoding ruined by inconsistent software across multiple computers.</p>
 </section>
 <section id="how-it-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-it-works">How it works</h2>
@@ -357,11 +360,6 @@ no secrets. A recorded walkthrough or screenshots could stand in for one. -->
 <li>A model (Claude Haiku or Sonnet) extracts the shop, date and total from each photo, and the result is validated before staff see it.</li>
 <li>An evaluation command scores the extractors against hand-labelled sample photos.</li>
 </ul>
-<p>TODO: add the evaluation results you’re happy to publish, and screenshots of the app.</p>
-</section>
-<section id="what-i-learned" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-learned">What I learned</h2>
-<p>TODO: or remove this section.</p>
 
 
 </section>
@@ -792,7 +790,7 @@ no secrets. A recorded walkthrough or screenshots could stand in for one. -->
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>TODO: footer text (e.g.&nbsp;© year, name)</p>
+<p>© 2026, Lorcan Odufuwa-Bolger</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2026-10-13">
 <meta name="description" content="A webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.">
 
-<title>Snellen screening toy – TODO: site title</title>
+<title>Snellen screening toy – My Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -49,9 +49,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0b1706b5a2e5be7bec04d9262feeb417.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-693478bb3d1a18757b6fd036f1cb413f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-0b1706b5a2e5be7bec04d9262feeb417.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-3a7da6518887aa47afbf2bcd4f8bd530.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-b7590b0eb7ddd29b5e9d4a94d4f6127d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-3a7da6518887aa47afbf2bcd4f8bd530.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,11 +82,11 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 
 
-<meta property="og:title" content="Snellen screening toy – TODO: site title">
+<meta property="og:title" content="Snellen screening toy – My Portfolio">
 <meta property="og:description" content="A webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.">
-<meta property="og:image" content="https://lorcanob.github.io/portfolio/projects/snellen/thumbnail.svg">
-<meta property="og:site_name" content="TODO: site title">
-<meta property="og:image:alt" content="TODO: describe the screenshot">
+<meta property="og:image" content="https://lorcanob.github.io/portfolio/projects/snellen/eye_1.webp">
+<meta property="og:site_name" content="My Portfolio">
+<meta property="og:image:alt" content="Directing the future of preventative eye care">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -259,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">TODO: site title</span>
+    <span class="navbar-title">My Portfolio</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -309,8 +309,9 @@ ul.task-list li input[type="checkbox"] {
 <h1 class="title">Snellen screening toy</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Python</div>
-    <div class="quarto-category">computer vision</div>
-    <div class="quarto-category">WebAssembly</div>
+    <div class="quarto-category">Computer Vision</div>
+    <div class="quarto-category">MediaPipe</div>
+    <div class="quarto-category">OpenCV</div>
   </div>
   </div>
 
@@ -341,6 +342,7 @@ ul.task-list li input[type="checkbox"] {
 
 <p><span class="badge-status">Live demo</span></p>
 <p><a href="../../demos/snellen/index.html" class="btn btn-primary demo-button">Try the demo</a> <!-- TODO: add a source link if the snellen repo is made public. --></p>
+<p>TODO: add a diagram or screenshots of the three steps (measure the screen, calibrate the camera, take the test).</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -361,20 +363,16 @@ Warning
 </section>
 <section id="what-i-built" class="level2">
 <h2 class="anchored" data-anchor-id="what-i-built">What I built</h2>
-<p>TODO: your part of it, in your own words: the problem, the approach, and the decisions you’re proudest of.</p>
+<p>Rapid deployable eye testing is still stuck in the 20th Century, with most online Snellen tests requiring a tape measure, a television sized screen, rock-steady seating, and a second pair of hands.</p>
+<p>This project aimed to use a computer vision solution so lightweight that it could run in-browser, with the added benefit of keeping all patient data on their own device, so no strict patient confidentiality to worry about.</p>
 </section>
 <section id="how-it-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-it-works">How it works</h2>
 <ul>
 <li>The same Python package runs on the desktop and in the browser. In the browser, <a href="https://pyodide.org">Pyodide</a> runs it with numpy and OpenCV.</li>
 <li>MediaPipe’s Face Landmarker tracks the face; a bank card, held to the screen and then to the forehead, gives the scale for the screen and the camera.</li>
-<li>Chart sizes come from the same geometry code in both versions, in device pixels.</li>
+<li>Chart sizes come from the same geometry code in all versions, in device pixels, and font resizes dynamically as the patients’ head changes distance from the screen.</li>
 </ul>
-<p>TODO: add a diagram or screenshots of the three steps (measure the screen, calibrate the camera, take the test).</p>
-</section>
-<section id="what-i-learned" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-learned">What I learned</h2>
-<p>TODO: or remove this section.</p>
 
 
 </section>
@@ -805,7 +803,7 @@ Warning
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>TODO: footer text (e.g.&nbsp;© year, name)</p>
+<p>© 2026, Lorcan Odufuwa-Bolger</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;
