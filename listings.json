@@ -1,0 +1,16 @@
+[
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/projects/receipt-ocr/index.html",
+      "/projects/snellen/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/projects/receipt-ocr/index.html",
+      "/projects/snellen/index.html"
+    ]
+  }
+]

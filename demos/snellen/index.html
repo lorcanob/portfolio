@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- A demo link: keep it out of search results. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Snellen eye test</title>
+  <style>
+    @font-face {
+      font-family: "OpticianSans";
+      src: url("dist/fonts/OpticianSans.ttf") format("truetype");
+    }
+    :root {
+      --bg: #fafaf7;
+      --text: #141414;
+      --muted: #6e6e6e;
+      --accent: #286ec8;
+      --error: #be2828;
+      --success: #1f7a3a;
+      --line: #dddddd;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 18px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    header {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px; border-bottom: 1px solid var(--line);
+    }
+    header .brand { font-weight: 600; }
+    header .disclaimer { color: var(--muted); font-size: 14px; }
+    main { padding: 24px 16px 96px; max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 30px; margin: 0 0 12px; }
+    #lines p { margin: 6px 0; }
+    #lines p.success { color: var(--success); font-weight: 600; }
+    #lines p.error { color: var(--error); font-weight: 600; }
+    #lines { max-width: 900px; }
+    #lines strong { font-weight: 700; }
+    #examples { display: flex; flex-wrap: wrap; gap: 16px; margin: 16px 0; }
+    .example { margin: 0; width: 260px; max-width: 100%; }
+    .example .frame {
+      aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: #fff;
+      border: 3px solid var(--success);
+    }
+    .example.bad .frame { border-color: var(--error); }
+    .example img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .example .frame.missing {
+      display: flex; align-items: center; justify-content: center; padding: 12px;
+      border-style: dashed; color: var(--muted); font-size: 13px; text-align: center;
+    }
+    .example figcaption { font-size: 15px; margin-top: 6px; }
+    .example.good strong { color: var(--success); }
+    .example.bad strong { color: var(--error); }
+    #buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    button {
+      font: inherit; font-size: 16px; padding: 8px 16px; border-radius: 6px;
+      border: 1px solid var(--line); background: #fff; color: var(--text); cursor: pointer;
+    }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    #bars { margin: 16px 0; border-left: 1px solid var(--text); padding: 4px 0; }
+    #bars .bar { height: 22px; margin: 10px 0; background: var(--muted); }
+    #bars .bar.selected { background: var(--accent); }
+    #progress { height: 14px; border: 1px solid var(--muted); margin: 16px 0; max-width: 600px; }
+    #progress div { height: 100%; background: var(--accent); width: 0; }
+    #chart { width: 100%; height: 60vh; display: block; background: #fff; }
+    #warning { color: var(--error); min-height: 1.5em; }
+    #status { color: var(--muted); font-size: 15px; }
+    #preview {
+      position: fixed; right: 16px; bottom: 16px; width: 280px;
+      border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #000;
+    }
+    #preview video, #preview canvas {
+      width: 100%; display: block; transform: scaleX(-1); /* mirrored, like a selfie */
+    }
+    #preview canvas { position: absolute; inset: 0; }
+    #stats { position: fixed; left: 8px; bottom: 8px; font: 12px ui-monospace, Menlo, monospace;
+      color: var(--muted); white-space: pre; }
+    [hidden] { display: none !important; }
+    @media (max-width: 700px) {
+      header .disclaimer { display: none; }
+      #preview { width: 160px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="brand">Snellen eye test</span>
+    <span class="disclaimer">Screening toy only, not a medical test. Your camera stays on this device.</span>
+    <button id="fullscreen" title="Full screen">Full screen</button>
+  </header>
+  <main>
+    <h1 id="title">Loading…</h1>
+    <div id="lines"><p>Getting the test ready. The first visit downloads about 25 MB;
+      after that it starts in a few seconds.</p></div>
+    <div id="bars" hidden></div>
+    <div id="progress" hidden><div></div></div>
+    <div id="chart-wrap" hidden>
+      <div id="warning"></div>
+      <canvas id="chart"></canvas>
+      <div id="status"></div>
+    </div>
+    <div id="buttons"></div>
+    <div id="examples" hidden></div>
+  </main>
+  <div id="preview" hidden>
+    <video id="video" playsinline muted></video>
+    <canvas id="overlay"></canvas>
+  </div>
+  <div id="stats" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "projects/snellen/index.html",
+    "href": "projects/snellen/index.html",
+    "title": "Snellen screening toy",
+    "section": "",
+    "text": "Live demo\nTry the demo"
+  },
+  {
+    "objectID": "projects/snellen/index.html#what-it-is",
+    "href": "projects/snellen/index.html#what-it-is",
+    "title": "Snellen screening toy",
+    "section": "What it is",
+    "text": "What it is\nA webcam eye test you can run on your own computer. It shows a chart of classic Snellen letters, “Tumbling E” shapes or Landolt C rings, sizes them to how far you are from the screen, and tests each eye in turn.\nThe demo runs entirely in the browser: the camera stays on your device and no video is uploaded. It needs a webcam and a bank card (or any card the same size), which is used as a ruler to measure the screen and calibrate the camera."
+  },
+  {
+    "objectID": "projects/snellen/index.html#what-i-built",
+    "href": "projects/snellen/index.html#what-i-built",
+    "title": "Snellen screening toy",
+    "section": "What I built",
+    "text": "What I built\nTODO: your part of it, in your own words: the problem, the approach, and the decisions you’re proudest of."
+  },
+  {
+    "objectID": "projects/snellen/index.html#how-it-works",
+    "href": "projects/snellen/index.html#how-it-works",
+    "title": "Snellen screening toy",
+    "section": "How it works",
+    "text": "How it works\n\nThe same Python package runs on the desktop and in the browser. In the browser, Pyodide runs it with numpy and OpenCV.\nMediaPipe’s Face Landmarker tracks the face; a bank card, held to the screen and then to the forehead, gives the scale for the screen and the camera.\nChart sizes come from the same geometry code in both versions, in device pixels.\n\nTODO: add a diagram or screenshots of the three steps (measure the screen, calibrate the camera, take the test)."
+  },
+  {
+    "objectID": "projects/snellen/index.html#what-i-learned",
+    "href": "projects/snellen/index.html#what-i-learned",
+    "title": "Snellen screening toy",
+    "section": "What I learned",
+    "text": "What I learned\nTODO: or remove this section."
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Receipt OCR\n\n\n\nPython\n\nLLMs\n\nAWS\n\n\n\nPetty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.\n\n\n\n\n\n\n\n\n\n\n\n\nSnellen screening toy\n\n\n\nPython\n\ncomputer vision\n\nWebAssembly\n\n\n\nA webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "TODO: your name",
+    "section": "",
+    "text": "TODO: a short bio: what you do, what you’re interested in, and what kind of work you’re looking for."
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "TODO: your name",
+    "section": "Experience",
+    "text": "Experience\nTODO: roles, organisations and dates, or remove this section."
+  },
+  {
+    "objectID": "about.html#skills",
+    "href": "about.html#skills",
+    "title": "TODO: your name",
+    "section": "Skills",
+    "text": "Skills\nTODO: languages, tools and areas, or remove this section."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "TODO: headline (e.g. your name)",
+    "section": "",
+    "text": "TODO: two or three sentences on who you are, what you build, and what this site is for.\n\nSee all projects About me"
+  },
+  {
+    "objectID": "index.html#recent-projects",
+    "href": "index.html#recent-projects",
+    "title": "TODO: headline (e.g. your name)",
+    "section": "Recent projects",
+    "text": "Recent projects\n\n\n\n\n\n\n\n\n\n\nReceipt OCR\n\n\n\nPython\n\nLLMs\n\nAWS\n\n\n\nPetty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.\n\n\n\n\n\n\n\n\n\n\n\n\nSnellen screening toy\n\n\n\nPython\n\ncomputer vision\n\nWebAssembly\n\n\n\nA webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects/receipt-ocr/index.html",
+    "href": "projects/receipt-ocr/index.html",
+    "title": "Receipt OCR",
+    "section": "",
+    "text": "Local only"
+  },
+  {
+    "objectID": "projects/receipt-ocr/index.html#what-it-is",
+    "href": "projects/receipt-ocr/index.html#what-it-is",
+    "title": "Receipt OCR",
+    "section": "What it is",
+    "text": "What it is\nPetty-cash receipts for a group of restaurants. Staff photograph receipts, Claude reads the shop, date and total, staff check and tag each one, and a manager emails the month’s ledger as an xlsx file to the head of department.\nIt runs locally as a small web app for now; AWS comes next."
+  },
+  {
+    "objectID": "projects/receipt-ocr/index.html#what-i-built",
+    "href": "projects/receipt-ocr/index.html#what-i-built",
+    "title": "Receipt OCR",
+    "section": "What I built",
+    "text": "What I built\nTODO: your part of it, in your own words: the problem, the approach, and the decisions you’re proudest of."
+  },
+  {
+    "objectID": "projects/receipt-ocr/index.html#how-it-works",
+    "href": "projects/receipt-ocr/index.html#how-it-works",
+    "title": "Receipt OCR",
+    "section": "How it works",
+    "text": "How it works\n\nA model (Claude Haiku or Sonnet) extracts the shop, date and total from each photo, and the result is validated before staff see it.\nAn evaluation command scores the extractors against hand-labelled sample photos.\n\nTODO: add the evaluation results you’re happy to publish, and screenshots of the app."
+  },
+  {
+    "objectID": "projects/receipt-ocr/index.html#what-i-learned",
+    "href": "projects/receipt-ocr/index.html#what-i-learned",
+    "title": "Receipt OCR",
+    "section": "What I learned",
+    "text": "What I learned\nTODO: or remove this section."
+  }
+]
