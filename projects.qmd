@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-description: "TODO: one line introducing the projects."
+description: "A menagerie of AI solutions to overlooked problems."
 listing:
   contents: projects/*/index.qmd
   type: grid

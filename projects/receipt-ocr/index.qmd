@@ -1,16 +1,18 @@
 ---
 title: "Receipt OCR"
 description: "Petty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month's ledger goes out as a spreadsheet."
-date: 2026-10-16  # TODO: confirm (date of the first commit)
-categories: [Python, LLMs, AWS]  # TODO: confirm
-image: thumbnail.svg  # TODO: replace with a real screenshot (16:9)
-image-alt: "TODO: describe the screenshot"
+date: 2026-10-16
+categories: [Python, Computer Vision, LLMs, AWS]
+image: receipt.webp
+image-alt: Simplifying data entry for restaurant staff
 ---
 
 [Local only]{.badge-status}
 
 <!-- TODO: no public demo yet: the app needs an API key, and the site stays static with
 no secrets. A recorded walkthrough or screenshots could stand in for one. -->
+
+TODO: add the evaluation results you're happy to publish, and screenshots of the app.
 
 ## What it is
 
@@ -22,17 +24,17 @@ It runs locally as a small web app for now; AWS comes next.
 
 ## What I built
 
-TODO: your part of it, in your own words: the problem, the approach, and the decisions
-you're proudest of.
+Many small businesses in Japan still operate their monthly budgeting using data manually
+entered by fatigued shop employees who often aren't trained in spreadsheet formats and
+standards, leading to the digital equivalent of a hoarder's cluttered file system.
+
+This project aimed to address these pain points in the simplest manner possible to reduce
+error at the entry stage by employees, and to reduce the headache for managers who would
+often spend hours untangling a spreadsheet that has had its formatting and save encoding
+ruined by inconsistent software across multiple computers.
 
 ## How it works
 
 - A model (Claude Haiku or Sonnet) extracts the shop, date and total from each photo,
   and the result is validated before staff see it.
 - An evaluation command scores the extractors against hand-labelled sample photos.
-
-TODO: add the evaluation results you're happy to publish, and screenshots of the app.
-
-## What I learned
-
-TODO: or remove this section.

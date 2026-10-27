@@ -32,3 +32,102 @@ $font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-seri
 .demo-button {
   margin: 0.5rem 0.5rem 0.5rem 0;
 }
+
+// About page: experience timeline.
+.timeline {
+  position: relative;
+  margin: 1.5rem 0 2.5rem;
+  padding-left: 1.75rem;
+  border-left: 2px solid rgba($primary, 0.3);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 1.5rem;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  // Dot on the line.
+  &::before {
+    content: "";
+    position: absolute;
+    left: calc(-1.75rem - 7px);
+    top: 0.3rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $primary;
+    box-shadow: 0 0 0 4px rgba($primary, 0.15);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    margin: 0.15rem 0 0.1rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $primary;
+}
+
+.timeline-org {
+  opacity: 0.75;
+}
+
+// About page: grouped skill chips.
+.skill-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.skill-group {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba($primary, 0.2);
+  border-radius: 0.75rem;
+
+  h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+  }
+}
+
+.skill {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba($primary, 0.12);
+  color: $primary;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+// The brand blue is too dark to read as text on the dark theme.
+body.quarto-dark {
+  .timeline-date,
+  .skill {
+    color: lighten($primary, 30%);
+  }
+}

@@ -1,5 +1,5 @@
 ---
-title: "TODO: headline (e.g. your name)"
+title: "Lorcan Odufuwa-Bolger's Personal Projects"
 listing:
   id: recent
   contents: projects/*/index.qmd
@@ -14,7 +14,8 @@ title-block-banner: false
 
 ::: {.hero}
 ::: {.lead}
-TODO: two or three sentences on who you are, what you build, and what this site is for.
+I'm a data scientist, keen to root out overlooked
+applications for lightweight AI solutions in everyday problems
 :::
 
 [See all projects](projects.qmd){.btn .btn-primary}

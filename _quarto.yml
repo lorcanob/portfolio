@@ -10,10 +10,10 @@ project:
     - "!projects/_template/"
 
 website:
-  title: "TODO: site title"
-  description: "TODO: one-line description of the site"
-  site-url: "https://lorcanob.github.io/portfolio/"  # TODO: confirm once the repo name is final
-  repo-url: "https://github.com/lorcanob/portfolio"  # TODO: confirm once the repo exists
+  title: "My Portfolio"
+  description: "A brief showcase of my side projects"
+  site-url: "https://lorcanob.github.io/portfolio/"
+  repo-url: "https://github.com/lorcanob/portfolio"
   open-graph: true
   page-navigation: false
   navbar:
@@ -29,7 +29,7 @@ website:
         href: "https://github.com/lorcanob"
         aria-label: GitHub
   page-footer:
-    center: "TODO: footer text (e.g. © year, name)"
+    center: "© 2026, Lorcan Odufuwa-Bolger"
 
 format:
   html:

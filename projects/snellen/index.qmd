@@ -1,16 +1,19 @@
 ---
 title: "Snellen screening toy"
 description: "A webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test."
-date: 2026-10-13  # TODO: confirm (date of the first commit)
-categories: [Python, computer vision, WebAssembly]  # TODO: confirm
-image: thumbnail.svg  # TODO: replace with a real screenshot (16:9)
-image-alt: "TODO: describe the screenshot"
+date: 2026-10-13
+categories: [Python, Computer Vision, MediaPipe, OpenCV]
+image: eye_1.webp
+image-alt: "Directing the future of preventative eye care"
 ---
 
 [Live demo]{.badge-status}
 
 [Try the demo](../../demos/snellen/index.html){.btn .btn-primary .demo-button}
 <!-- TODO: add a source link if the snellen repo is made public. -->
+
+TODO: add a diagram or screenshots of the three steps (measure the screen, calibrate
+the camera, take the test).
 
 ::: {.callout-warning}
 This is a screening toy, not a medical test. It cannot diagnose anything and does not
@@ -30,8 +33,13 @@ as a ruler to measure the screen and calibrate the camera.
 
 ## What I built
 
-TODO: your part of it, in your own words: the problem, the approach, and the decisions
-you're proudest of.
+Rapid deployable eye testing is still stuck in the 20th Century, with most online
+Snellen tests requiring a tape measure, a television sized screen, rock-steady seating,
+and a second pair of hands.
+
+This project aimed to use a computer vision solution so
+lightweight that it could run in-browser, with the added benefit of keeping all patient
+data on their own device, so no strict patient confidentiality to worry about.
 
 ## How it works
 
@@ -39,11 +47,6 @@ you're proudest of.
   [Pyodide](https://pyodide.org) runs it with numpy and OpenCV.
 - MediaPipe's Face Landmarker tracks the face; a bank card, held to the screen and
   then to the forehead, gives the scale for the screen and the camera.
-- Chart sizes come from the same geometry code in both versions, in device pixels.
+- Chart sizes come from the same geometry code in all versions, in device pixels,
+  and font resizes dynamically as the patients' head changes distance from the screen.
 
-TODO: add a diagram or screenshots of the three steps (measure the screen, calibrate
-the camera, take the test).
-
-## What I learned
-
-TODO: or remove this section.

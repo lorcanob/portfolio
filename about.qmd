@@ -1,7 +1,7 @@
 ---
-title: "TODO: your name"
-image: images/profile.svg
-image-alt: "TODO: describe the photo"
+title: "About Me"
+image: images/IMG_2836.JPG
+image-alt: "Lorcan Odufuwa-Bolger"
 about:
   template: jolla
   links:
@@ -11,13 +11,83 @@ about:
     # TODO: add any other links you want public (LinkedIn, email, CV)
 ---
 
-TODO: a short bio: what you do, what you're interested in, and what kind of work you're
-looking for.
+I'm a data scientist born in the London and based in Tokyo, always on the lookout for
+easy AI wins that most people overlook.
+
+With the invention of the Transformer and its heralding in of the new AI Summer,
+everyone is looking at how LLMs and other frontier models can solve new and
+interesting problems, but often that outlook leaves behind problems that have been
+waiting for solutions for years, decades, or even longer; closing these gaps is the
+name of my game.
 
 ## Experience
 
-TODO: roles, organisations and dates, or remove this section.
+::: {.timeline}
+
+::: {.timeline-item}
+[2024 – Now]{.timeline-date}
+
+### Freelance AI Solutions Engineer
+[Independent]{.timeline-org}
+:::
+
+::: {.timeline-item}
+[2026]{.timeline-date}
+
+### Lead AI Engineer
+[Soundraw]{.timeline-org}
+:::
+
+::: {.timeline-item}
+[2025]{.timeline-date}
+
+### Data Scientist
+[KPMG]{.timeline-org}
+:::
+
+::: {.timeline-item}
+[2022 – 2024]{.timeline-date}
+
+### Data Scientist
+[Xenera Co. Ltd]{.timeline-org}
+:::
+
+::: {.timeline-item}
+[2021 – 2026]{.timeline-date}
+
+### Data Science Lecturer
+[Le Wagon]{.timeline-org}
+:::
+
+:::
 
 ## Skills
 
-TODO: languages, tools and areas, or remove this section.
+::: {.skill-groups}
+
+::: {.skill-group}
+#### Languages & Frameworks
+[Python]{.skill} [SQL]{.skill} [Django]{.skill} [Flask]{.skill} [Streamlit]{.skill}
+:::
+
+::: {.skill-group}
+#### Machine Learning
+[PyTorch]{.skill} [TF/Keras]{.skill} [HuggingFace]{.skill} [StableAudio]{.skill} [OpenVINO]{.skill}
+:::
+
+::: {.skill-group}
+#### Computer Vision
+[OpenCV]{.skill} [MediaPipe]{.skill}
+:::
+
+::: {.skill-group}
+#### Data Engineering
+[Apache Spark]{.skill} [Databricks]{.skill} [dbt]{.skill} [Airflow]{.skill} [ElasticSearch]{.skill} [MongoDB]{.skill}
+:::
+
+::: {.skill-group}
+#### Cloud & DevOps
+[AWS]{.skill} [GCP]{.skill} [Azure]{.skill} [Docker]{.skill} [Heroku]{.skill}
+:::
+
+:::
