@@ -4,7 +4,7 @@
     "href": "projects/snellen/index.html",
     "title": "Snellen screening toy",
     "section": "",
-    "text": "Live demo\nTry the demo\nTODO: add a diagram or screenshots of the three steps (measure the screen, calibrate the camera, take the test)."
+    "text": "Live demo\nTry the demo"
   },
   {
     "objectID": "projects/snellen/index.html#what-it-is",
@@ -32,7 +32,7 @@
     "href": "projects.html",
     "title": "Projects",
     "section": "",
-    "text": "Receipt OCR\n\n\n\nPython\n\nComputer Vision\n\nLLMs\n\nAWS\n\n\n\nPetty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.\n\n\n\n\n\n\n\n\n\n\n\n\nSnellen screening toy\n\n\n\nPython\n\nComputer Vision\n\nMediaPipe\n\nOpenCV\n\n\n\nA webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.\n\n\n\n\n\nNo matching items"
+    "text": "Receipt OCR\n\n\n\nPython\n\nComputer Vision\n\nOCR\n\nLLMs\n\nAWS\n\n\n\nPetty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.\n\n\n\n\n\n\n\n\n\n\n\n\nSnellen screening toy\n\n\n\nPython\n\nComputer Vision\n\nMediaPipe\n\nOpenCV\n\nMedical\n\n\n\nA webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -58,23 +58,23 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Lorcan Odufuwa-Bolger’s Personal Projects",
+    "title": "Lorcan’s Personal Projects",
     "section": "",
-    "text": "I’m a data scientist, keen to root out overlooked applications for lightweight AI solutions in everyday problems\n\nSee all projects About me"
+    "text": "A data scientist keen to root out overlooked applications for lightweight AI solutions in everyday problems\n\nSee all projects About me"
   },
   {
     "objectID": "index.html#recent-projects",
     "href": "index.html#recent-projects",
-    "title": "Lorcan Odufuwa-Bolger’s Personal Projects",
+    "title": "Lorcan’s Personal Projects",
     "section": "Recent projects",
-    "text": "Recent projects\n\n\n\n\n\n\n\n\n\n\nReceipt OCR\n\n\n\nPython\n\nComputer Vision\n\nLLMs\n\nAWS\n\n\n\nPetty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.\n\n\n\n\n\n\n\n\n\n\n\n\nSnellen screening toy\n\n\n\nPython\n\nComputer Vision\n\nMediaPipe\n\nOpenCV\n\n\n\nA webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.\n\n\n\n\n\nNo matching items"
+    "text": "Recent projects\n\n\n\n\n\n\n\n\n\n\nReceipt OCR\n\n\n\nPython\n\nComputer Vision\n\nOCR\n\nLLMs\n\nAWS\n\n\n\nPetty-cash receipts for a group of restaurants: photograph a receipt, Claude reads it, staff check it, and the month’s ledger goes out as a spreadsheet.\n\n\n\n\n\n\n\n\n\n\n\n\nSnellen screening toy\n\n\n\nPython\n\nComputer Vision\n\nMediaPipe\n\nOpenCV\n\nMedical\n\n\n\nA webcam eye test that sizes the chart to how far you sit from the screen. A screening toy, not a medical test.\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "projects/receipt-ocr/index.html",
     "href": "projects/receipt-ocr/index.html",
     "title": "Receipt OCR",
     "section": "",
-    "text": "Local only\nTODO: add the evaluation results you’re happy to publish, and screenshots of the app."
+    "text": "Local only"
   },
   {
     "objectID": "projects/receipt-ocr/index.html#what-it-is",
