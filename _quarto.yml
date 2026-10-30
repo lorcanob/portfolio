@@ -11,6 +11,7 @@ project:
 
 website:
   title: "My Portfolio"
+  favicon: images/favicon.png
   description: "A brief showcase of my side projects"
   site-url: "https://lorcanob.github.io/portfolio/"
   repo-url: "https://github.com/lorcanob/portfolio"
