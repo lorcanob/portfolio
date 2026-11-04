@@ -131,3 +131,47 @@ body.quarto-dark {
     color: lighten($primary, 30%);
   }
 }
+
+// Name banner: a faded satellite image behind the page title. Each page picks its
+// image with `body-classes: banner-<name>` in its front matter.
+$banners: (home: "banner-home.jpg", projects: "banner-projects.jpg", about: "banner-about.jpg");
+
+@each $name, $file in $banners {
+  .banner-#{$name} #title-block-header::before {
+    background-image: url("images/#{$file}");
+  }
+}
+
+[class*="banner-"] #title-block-header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 2.5rem 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.28;
+    // Fade out on the left so the title reads cleanly.
+    mask-image: linear-gradient(to right, transparent, #000 55%);
+  }
+}
+
+// The About title is centred and its block shrinks to fit, so widen it and fade both edges.
+.banner-about #title-block-header {
+  width: 100%;
+
+  &::before {
+    mask-image: linear-gradient(to right, transparent, #000 30%, #000 70%, transparent);
+  }
+}
+
+.banner-home .hero {
+  padding-top: 0.5rem;
+}

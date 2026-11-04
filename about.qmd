@@ -9,6 +9,7 @@ about:
       text: GitHub
       href: "https://github.com/lorcanob"
     # TODO: add any other links you want public (LinkedIn, email, CV)
+body-classes: banner-about
 ---
 
 I'm a data scientist born in the London and based in Tokyo, always on the lookout for
