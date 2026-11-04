@@ -33,33 +33,70 @@ $font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-seri
   margin: 0.5rem 0.5rem 0.5rem 0;
 }
 
-// About page: experience timeline.
+// About page: experience timeline, two columns around a centre line: dates on the
+// left, role and company on the right.
+$timeline-gutter: 3rem;
+$timeline-title-size: 1.15rem;
+$timeline-title-line-height: 1.2;
+$timeline-dot: 12px;
+// Vertical centre of the role title's first line, where the dot and line meet.
+$timeline-dot-centre: $timeline-title-size * $timeline-title-line-height * 0.5;
+
 .timeline {
-  position: relative;
   margin: 1.5rem 0 2.5rem;
-  padding-left: 1.75rem;
-  border-left: 2px solid rgba($primary, 0.3);
 }
 
 .timeline-item {
   position: relative;
+  display: grid;
+  grid-template-columns: 1fr $timeline-gutter 1fr;
+  align-items: start;
   padding-bottom: 1.5rem;
 
   &:last-child {
     padding-bottom: 0;
   }
 
-  // Dot on the line.
+  // Date paragraph on the left, role section on the right.
+  // The date's box is as tall as the title's first line and centres the date in it,
+  // so it sits level with the dot rather than on the larger text's baseline.
+  > p {
+    grid-column: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: $timeline-title-size * $timeline-title-line-height;
+  }
+
+  > section {
+    grid-column: 3;
+    text-align: left;
+  }
+
+  // Dot on the line, centred on the role title's first line.
   &::before {
     content: "";
     position: absolute;
-    left: calc(-1.75rem - 7px);
-    top: 0.3rem;
-    width: 12px;
-    height: 12px;
+    z-index: 1;
+    left: calc(50% - #{$timeline-dot * 0.5});
+    top: calc(#{$timeline-dot-centre} - #{$timeline-dot * 0.5});
+    width: $timeline-dot;
+    height: $timeline-dot;
     border-radius: 50%;
     background: $primary;
     box-shadow: 0 0 0 4px rgba($primary, 0.15);
+  }
+
+  // Line segment from this dot down to the next one, so the line starts at the
+  // first dot and stops at the last.
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(50% - 1px);
+    top: $timeline-dot-centre;
+    bottom: -$timeline-dot-centre;
+    width: 2px;
+    background: rgba($primary, 0.3);
   }
 
   p {
@@ -67,8 +104,9 @@ $font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-seri
   }
 
   h3 {
-    margin: 0.15rem 0 0.1rem;
-    font-size: 1.15rem;
+    margin: 0 0 0.1rem;
+    font-size: $timeline-title-size;
+    line-height: $timeline-title-line-height;
     font-weight: 600;
   }
 }
@@ -95,6 +133,7 @@ $font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-seri
 
 .skill-group {
   padding: 1rem 1.1rem;
+  text-align: left;
   border: 1px solid rgba($primary, 0.2);
   border-radius: 0.75rem;
 

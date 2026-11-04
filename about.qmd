@@ -12,7 +12,7 @@ about:
 body-classes: banner-about
 ---
 
-I'm a data scientist born in the London and based in Tokyo, always on the lookout for
+I'm a data scientist born in London and based in Tokyo, always on the lookout for
 easy AI wins that most people overlook.
 
 With the invention of the Transformer and its heralding in of the new AI Summer,
