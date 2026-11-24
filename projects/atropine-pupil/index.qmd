@@ -1,0 +1,376 @@
+---
+title: "Pupil dilation as a treatment marker"
+description: "Can the pupil dilation atropine causes show whether a child's myopia treatment is working? A case study in analysing a clinical cohort honestly."
+date: 2026-11-21
+categories: [Python, Statistics, Mixed Models, Medical]
+image: thumbnail.svg
+image-alt: "Simulated scatter of eye growth against pupil dilation, with within-eye and between-eye trend lines"
+format:
+  html:
+    mermaid:
+      theme: neutral
+---
+
+[Case study]{.badge-status}
+
+::: {.content-hidden}
+TODO: cohort counts (patients, eyes, intervals) only once you approve publishing them.
+
+TODO: exact estimates, p-values and the clinic's name only after publication/ethics sign-off.
+Until then the results section stays qualitative.
+:::
+
+::: {.callout-note}
+Every chart on this page uses **simulated data**. No patient data, real estimates or real
+figures appear here.
+:::
+
+## The question
+
+Atropine eye drops are used to slow myopia in children: the eye grows too long, and the drops
+slow that growth. They also dilate the pupil, as a side effect you can see without any special
+equipment.
+
+So: **can atropine-induced pupil dilation flag whether myopia treatment is working?** If the
+children whose pupils dilate more are also the ones whose eyes grow more slowly, a pupil
+measurement could become a cheap, visible early sign of treatment response.
+
+The data was a clinic's export from an IOLMaster, a machine that measures the eye's length
+(axial length) and pupil size at each visit. This page is about the reasoning more than the
+model. Most of the work was deciding what question the data could actually answer, and making
+sure the answer couldn't be quietly steered.
+
+## What made it hard
+
+### The patient is the unit, not the eye
+
+Each child contributes two eyes and many visits. Two eyes share genes, age, diet and how
+reliably the child takes their drops, and ten visits from one child are ten looks at *one*
+child, not ten pieces of independent evidence. Treating every row as independent would make
+the evidence look far stronger than it is.
+
+So every model is a **mixed-effects model** with visits nested in eyes nested in patients: each
+patient and each eye gets its own baseline offset, and the model learns how alike they are. It
+also copes with the irregular, gappy follow-up that real clinics produce.
+
+### Two questions hiding in one variable
+
+"Does more dilation go with slower growth?" can mean two different things:
+
+- **Between eyes:** are eyes that dilate a lot *in general* the ones that grow slowly? This is
+  the question as asked, but it can be confounded: children who dilate more might be on a
+  higher dose, take their drops more reliably, or have lighter irises.
+- **Within an eye:** when an eye is *more dilated than its own usual*, does it grow more slowly
+  in that period? Each eye is compared only with itself, so fixed traits cancel out.
+
+Put raw dilation into a model and you get a blend of the two that answers neither. The fix is
+to split it: each eye's average dilation (between) and each visit's deviation from that average
+(within).
+
+```python
+def split_pupil(fu, col="pupil_change"):
+    fu = fu.copy()
+    # "A big dilator?" and "more dilated than usual at this visit?"
+    fu["pupil_between"] = fu.groupby(EYE)[col].transform("mean")
+    fu["pupil_within"] = fu[col] - fu["pupil_between"]
+    return fu
+```
+
+Try it below. The sliders set how growth (mm/year) changes per mm of dilation, between eyes and
+within an eye. Set them however you like, and watch the pooled line (dashed) land somewhere
+between them, describing neither.
+
+```{ojs}
+//| echo: false
+function rng(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function normal(r) {
+  return Math.sqrt(-2 * Math.log(1 - r())) * Math.cos(2 * Math.PI * r());
+}
+
+function ols(xs, ys) {
+  const mx = d3.mean(xs), my = d3.mean(ys);
+  const slope = d3.sum(xs, (x, i) => (x - mx) * (ys[i] - my)) / d3.sum(xs, (x) => (x - mx) ** 2);
+  return { slope, intercept: my - slope * mx };
+}
+
+primary = "#2a6f97"
+```
+
+```{ojs}
+//| echo: false
+viewof betweenSlope = Inputs.range([-0.2, 0.2], { value: -0.15, step: 0.01, label: "Between eyes" })
+viewof withinSlope = Inputs.range([-0.2, 0.2], { value: 0.1, step: 0.01, label: "Within an eye" })
+viewof cohortSeed = {
+  // A plain button in the site's style; each click draws a new simulated cohort.
+  const button = html`<button class="btn btn-outline-secondary btn-sm">New simulated cohort</button>`;
+  button.value = 1;
+  button.onclick = () => {
+    button.value += 1;
+    button.dispatchEvent(new Event("input", { bubbles: true }));
+  };
+  return button;
+}
+```
+
+```{ojs}
+//| echo: false
+// Simulated eyes: each has its own typical dilation, and visits scatter around it.
+simEyes = {
+  const r = rng(cohortSeed * 7919);
+  const rows = [];
+  for (let e = 0; e < 8; e++) {
+    const typical = 0.2 + e / 7 + 0.1 * normal(r);
+    const offset = 0.02 * normal(r);
+    for (let v = 0; v < 6; v++) {
+      rows.push({ eye: `Eye ${e + 1}`, typical, offset, dev: 0.25 * normal(r), noise: 0.02 * normal(r) });
+    }
+  }
+  return rows;
+}
+
+explainerPoints = simEyes.map((d) => ({
+  ...d,
+  x: d.typical + d.dev,
+  y: 0.25 + betweenSlope * (d.typical - 0.7) + withinSlope * d.dev + d.offset + d.noise
+}))
+
+explainerFits = {
+  const pooled = ols(explainerPoints.map((d) => d.x), explainerPoints.map((d) => d.y));
+  const eyes = d3.groups(explainerPoints, (d) => d.eye).map(([eye, ps]) => ({
+    eye, ps, mx: d3.mean(ps, (d) => d.x), my: d3.mean(ps, (d) => d.y)
+  }));
+  const between = ols(eyes.map((g) => g.mx), eyes.map((g) => g.my));
+  const wx = eyes.flatMap((g) => g.ps.map((p) => p.x - g.mx));
+  const wy = eyes.flatMap((g) => g.ps.map((p) => p.y - g.my));
+  return { pooled, between, within: ols(wx, wy).slope, eyes };
+}
+```
+
+```{ojs}
+//| echo: false
+{
+  const [lo, hi] = d3.extent(explainerPoints, (d) => d.x);
+  const line = (f) => [{ x: lo, y: f.intercept + f.slope * lo }, { x: hi, y: f.intercept + f.slope * hi }];
+  const w = explainerFits.within;
+  return Plot.plot({
+    width,
+    height: 380,
+    marginLeft: 50,
+    x: { label: "Pupil dilation since starting atropine (mm) →" },
+    y: { label: "↑ Eye growth (mm/year)" },
+    color: { scheme: "tableau10" },
+    caption: "Simulated data. Coloured short lines: within each eye. Blue: between eyes. Dashed: everything pooled.",
+    marks: [
+      Plot.dot(explainerPoints, { x: "x", y: "y", fill: "eye", r: 3.5, fillOpacity: 0.7 }),
+      Plot.link(explainerFits.eyes, {
+        x1: (g) => g.mx - 0.3, y1: (g) => g.my - 0.3 * w,
+        x2: (g) => g.mx + 0.3, y2: (g) => g.my + 0.3 * w,
+        stroke: "eye", strokeWidth: 2
+      }),
+      Plot.line(line(explainerFits.between), { x: "x", y: "y", stroke: primary, strokeWidth: 3 }),
+      Plot.line(line(explainerFits.pooled), { x: "x", y: "y", stroke: "currentColor", strokeDasharray: "6 4", strokeWidth: 1.5 })
+    ]
+  });
+}
+```
+
+```{ojs}
+//| echo: false
+md`Fitted slopes, in mm/year per mm of dilation: **between ${explainerFits.between.slope.toFixed(2)}**,
+**within ${explainerFits.within.toFixed(2)}**, and **pooled ${explainerFits.pooled.slope.toFixed(2)}**,
+which matches neither.`
+```
+
+The question as asked compares children, so the between-eye effect was the primary result and
+the within-eye effect secondary, with the confounding risk of the between comparison written
+into the plan's limitations before anything was fitted.
+
+### No untreated group
+
+Every child's first visit is before atropine and every later visit is on it, so there's no
+untreated comparison group. Each eye's own pre-treatment visit is the only "before".
+
+To see what an untreated history might add, I ran a side experiment: a synthetic **ghost
+baseline**, inventing years of untreated growth before each eye's first visit at typical
+untreated rates. It was useful and also showed its own limits. Because the invented growth was
+unrelated to pupil size, it could confirm the atropine effect I had built into it, but could
+never reveal a pupil–response link. It's kept apart from the main analysis and labelled
+exploratory.
+
+### A messy export
+
+The raw IOLMaster export needed real work before any analysis:
+
+- a file-version line above the column names;
+- test records mixed in with patients, and IDs that had to be checked one-to-one with patients;
+- repeat scans on the same day, some marked "Successful" and some only "Warning";
+- eyes that appear to *shrink* between visits, usually a measurement or left/right label error;
+- pupil sizes taken under unrecorded lighting, so the exposure itself is noisy.
+
+All of this is handled in code, never by hand in a spreadsheet: suspect rows are **flagged, not
+deleted**, so the main analysis keeps them and the sensitivity analyses test what happens
+without them.
+
+```{ojs}
+//| echo: false
+// Simulated axial-length trajectories: one line per eye.
+trajectories = {
+  const r = rng(42);
+  const rows = [];
+  for (let e = 0; e < 16; e++) {
+    const base = 24 + 0.9 * normal(r);
+    const rate = Math.max(0.03, 0.2 + 0.08 * normal(r));
+    for (let t = 0; t <= 3.2; t += 0.35 + 0.4 * r()) {
+      rows.push({ eye: e, years: t, AL: base + rate * t * (1 - 0.08 * t) + 0.015 * normal(r) });
+    }
+  }
+  return rows;
+}
+
+Plot.plot({
+  width,
+  height: 320,
+  marginLeft: 50,
+  x: { label: "Years since starting atropine →" },
+  y: { label: "↑ Axial length (mm)" },
+  caption: "Simulated trajectories, one line per eye, to show the shape of the data: uneven visit timing and different growth rates.",
+  marks: [
+    Plot.line(trajectories, { x: "years", y: "AL", z: "eye", stroke: primary, strokeOpacity: 0.45 }),
+    Plot.dot(trajectories, { x: "years", y: "AL", fill: primary, r: 2, fillOpacity: 0.6 })
+  ]
+})
+```
+
+## Rigour
+
+The pipeline runs in fixed phases, and each one feeds the next:
+
+```{mermaid}
+flowchart TB
+  subgraph data ["Data (shared)"]
+    direction LR
+    A["IOLMaster export"] --> B["Clean<br/>test records, age rule,<br/>ID checks, de-identify"]
+    B --> C["Quality flags<br/>flag, don't delete"]
+    C --> D["Features<br/>growth rates,<br/>pupil split"]
+  end
+  subgraph analysis ["Analysis (per question)"]
+    direction LR
+    E["Locked plan"] --> F["Stepwise<br/>mixed models"]
+    F --> G["Diagnostics"]
+    G --> H["Sensitivity<br/>analyses"]
+  end
+  subgraph reports ["Reports"]
+    direction LR
+    I["Technical report"] ~~~ J["Plain-language<br/>report"]
+  end
+  data --> analysis --> reports
+```
+
+- **The plan was locked before any model was fitted.** The question, outcome, exposure,
+  adjustments, model and every sensitivity analysis were written down, dated and committed
+  first. Any later change is logged with what changed and why, and anything decided after
+  seeing results is labelled exploratory. Try ten analyses and report the one that "worked",
+  and the p-value means nothing.
+- **Models were built up in steps:** time alone, then age, starting eye length and sex, then the
+  pupil terms. Watching coefficients move between steps shows what is explaining what.
+
+  ```python
+  STEPS = {
+      "1_time": "AL_rate ~ years",
+      "2_background": f"AL_rate ~ years + {BACKGROUND}",
+      "3_primary": f"AL_rate ~ years + {BACKGROUND} + {PUPIL}",
+  }
+  ```
+
+- **Diagnostics paid for themselves.** Residual and leave-one-patient-out checks caught two
+  things: one optimiser reporting convergence at a clearly worse solution (so each model is now
+  fitted with two optimisers and the better fit kept, with both reported), and one "patient"
+  who turned out to be a staff test scan. Both fixes went into the plan's change log.
+- **Sensitivity analyses, all reported:** around a dozen pre-listed variations, including pupil
+  measured at the *start* of each interval, a population-average GEE model, one eye per
+  patient, different interval rules, dropping flagged scans, and a cluster bootstrap that
+  resamples *patients*, not rows:
+
+  ```python
+  def bootstrap_sample(fu, rng):
+      rows = fu.groupby("Pat_ID").indices
+      draws = rng.choice(list(rows), len(rows), replace=True)
+      # Each copy of a patient becomes its own cluster
+      parts = [fu.iloc[rows[p]].assign(Pat_ID=f"{p}#{k}")
+               for k, p in enumerate(draws)]
+      return pd.concat(parts)
+  ```
+
+- **Reported to the STROBE checklist**, the standard for observational studies.
+- **Test-driven throughout:** about 120 tests cover cleaning, quality checks, features, models,
+  sensitivity analyses and the report build, each written before the code it tests.
+
+## What it found
+
+This was set up as an **estimation** study, not a hunt for p < 0.05: the aim was the size of
+the association and its confidence interval, read against how fast myopic eyes grow, so the
+answer is useful whichever way it goes.
+
+Read that way, **no clinically meaningful association was detected** between how much a
+child's pupils dilate and how fast their eyes grow on atropine. That's a useful answer in
+itself: pupil dilation alone shouldn't be read as a sign the treatment is working. Because the
+pupil measurements are noisy, it also doesn't rule out a real but small link, which better
+measurement could test.
+
+```{ojs}
+//| echo: false
+forestRows = {
+  const r = rng(2026);
+  const labels = [
+    "Primary model",
+    "Pupil at interval start",
+    "Cumulative growth",
+    "GEE (population average)",
+    "Cluster bootstrap",
+    "One eye per patient",
+    "Other interval rules",
+    "Season term",
+    "Eyes with 3+ intervals",
+    "Drop flagged intervals",
+    "Drop Warning-only scans",
+    "Child-level dilation",
+    "Device software version"
+  ];
+  return labels.map((label, i) => {
+    const est = 0.006 * normal(r), half = 0.015 + 0.012 * r();
+    return { label, est, lo: est - half, hi: est + half, primary: i === 0 };
+  });
+}
+
+Plot.plot({
+  width,
+  height: 420,
+  marginLeft: 190,
+  // Only zero is labelled, so the simulated values can't be read as a real effect size.
+  x: { label: "Effect estimate with 95% CI (simulated) →", ticks: [0] },
+  y: { label: null, domain: forestRows.map((d) => d.label) },
+  caption: "Illustrative layout with simulated numbers, not study results: one row per analysis, so agreement (or not) is visible at a glance.",
+  marks: [
+    Plot.ruleX([0], { stroke: "currentColor", strokeOpacity: 0.4 }),
+    Plot.link(forestRows, { x1: "lo", x2: "hi", y1: "label", y2: "label", stroke: (d) => (d.primary ? primary : "currentColor"), strokeWidth: 2 }),
+    Plot.dot(forestRows, { x: "est", y: "label", fill: (d) => (d.primary ? primary : "currentColor"), r: 4 })
+  ]
+})
+```
+
+## Two audiences
+
+The analysis produced two reports from the same results. The full technical report has the
+models, diagnostics, every sensitivity analysis and the STROBE checklist. A separate
+plain-language report, three pages at most, is for the clinicians: what was asked, what was
+found, what it does and doesn't mean for their patients, and no statistical jargon. Both come
+out of one build command, so they can't drift apart.
