@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lorcanob.github.io/portfolio/projects/snellen/index.html</loc>
-    <lastmod>2026-11-26T05:31:01.450Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lorcanob.github.io/portfolio/projects/japanese-pdf-reader/index.html</loc>
-    <lastmod>2026-11-26T05:31:01.449Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lorcanob.github.io/portfolio/projects.html</loc>
-    <lastmod>2026-11-26T05:31:01.440Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lorcanob.github.io/portfolio/about.html</loc>
-    <lastmod>2026-11-26T05:31:01.430Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lorcanob.github.io/portfolio/index.html</loc>
-    <lastmod>2026-11-26T05:31:01.440Z</lastmod>
-  </url>
-  <url>
-    <loc>https://lorcanob.github.io/portfolio/projects/atropine-pupil/index.html</loc>
-    <lastmod>2026-11-26T05:31:01.442Z</lastmod>
+    <loc>https://lorcanob.github.io/portfolio/projects/voice-commander/index.html</loc>
+    <lastmod>2026-11-26T10:16:03.675Z</lastmod>
   </url>
   <url>
     <loc>https://lorcanob.github.io/portfolio/projects/receipt-ocr/index.html</loc>
-    <lastmod>2026-11-26T05:31:01.449Z</lastmod>
+    <lastmod>2026-11-26T10:16:03.673Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lorcanob.github.io/portfolio/projects/atropine-pupil/index.html</loc>
+    <lastmod>2026-11-26T10:16:03.671Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lorcanob.github.io/portfolio/index.html</loc>
+    <lastmod>2026-11-26T10:16:03.670Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lorcanob.github.io/portfolio/about.html</loc>
+    <lastmod>2026-11-26T10:16:03.667Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lorcanob.github.io/portfolio/projects.html</loc>
+    <lastmod>2026-11-26T10:16:03.670Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lorcanob.github.io/portfolio/projects/japanese-pdf-reader/index.html</loc>
+    <lastmod>2026-11-26T10:16:03.673Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lorcanob.github.io/portfolio/projects/snellen/index.html</loc>
+    <lastmod>2026-11-26T10:16:03.675Z</lastmod>
   </url>
 </urlset>

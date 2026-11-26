@@ -1,17 +1,19 @@
 [
   {
-    "listing": "/projects.html",
+    "listing": "/index.html",
     "items": [
       "/projects/japanese-pdf-reader/index.html",
+      "/projects/voice-commander/index.html",
       "/projects/atropine-pupil/index.html",
       "/projects/receipt-ocr/index.html",
       "/projects/snellen/index.html"
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/projects.html",
     "items": [
       "/projects/japanese-pdf-reader/index.html",
+      "/projects/voice-commander/index.html",
       "/projects/atropine-pupil/index.html",
       "/projects/receipt-ocr/index.html",
       "/projects/snellen/index.html"

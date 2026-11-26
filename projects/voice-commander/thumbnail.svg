@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="A sound wave passing through a shield">
+<rect width="1600" height="900" fill="#f4f8fb"/>
+<g stroke="#4e79a7" stroke-width="22" stroke-linecap="round" fill="none" opacity="0.85">
+  <line x1="200" y1="420" x2="200" y2="480"/>
+  <line x1="260" y1="380" x2="260" y2="520"/>
+  <line x1="320" y1="320" x2="320" y2="580"/>
+  <line x1="380" y1="390" x2="380" y2="510"/>
+  <line x1="440" y1="280" x2="440" y2="620"/>
+  <line x1="500" y1="350" x2="500" y2="550"/>
+  <line x1="560" y1="300" x2="560" y2="600"/>
+  <line x1="620" y1="400" x2="620" y2="500"/>
+</g>
+<path d="M800 190 L1010 270 V460 C1010 600 915 690 800 740 C685 690 590 600 590 460 V270 Z" fill="#2a6f97"/>
+<path d="M705 465 L775 535 L905 395" stroke="#fff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<g stroke="#59a14f" stroke-width="22" stroke-linecap="round" fill="none" opacity="0.85">
+  <line x1="1100" y1="430" x2="1100" y2="470"/>
+  <line x1="1160" y1="410" x2="1160" y2="490"/>
+  <line x1="1220" y1="425" x2="1220" y2="475"/>
+  <line x1="1280" y1="440" x2="1280" y2="460"/>
+  <line x1="1340" y1="445" x2="1340" y2="455"/>
+</g>
+</svg>
