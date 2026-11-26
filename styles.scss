@@ -214,3 +214,99 @@ $banners: (home: "banner-home.jpg", projects: "banner-projects.jpg", about: "ban
 .banner-home .hero {
   padding-top: 0.5rem;
 }
+
+// Project pages: a strip of key facts under the status badge.
+.fact-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0 1.5rem;
+
+  p {
+    display: contents;
+  }
+}
+
+.fact {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba($primary, 0.12);
+  color: $primary;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+body.quarto-dark .fact {
+  color: lighten($primary, 30%);
+}
+
+// Before/after slider: the "after" image sits on top, clipped to the right of the handle.
+// Without JavaScript it stays at a 50/50 split.
+.ba-slider {
+  margin: 0 0 2rem;
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+}
+
+.ba-frame {
+  position: relative;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba($primary, 0.2);
+  }
+
+  .ba-after {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 0 var(--pos));
+  }
+
+  // The divider line at the handle position.
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 3px;
+    margin-left: -1.5px;
+    background: $primary;
+    pointer-events: none;
+  }
+
+  // An invisible range input over the images does the dragging (and keyboard control).
+  input[type="range"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+  }
+}
+
+// A wide screenshot next to a phone screenshot; stacks on narrow screens.
+.phone-pair {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+  align-items: start;
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Figures given width/height (so space is reserved while they load) still fit the column.
+img.figure-img {
+  max-width: 100%;
+  height: auto;
+}
