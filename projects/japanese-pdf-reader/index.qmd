@@ -2,7 +2,7 @@
 title: "Offline Japanese PDF Reader"
 description: "Translate Japanese paperwork into English without losing the layout, and without sending it to the cloud."
 date: 2026-11-26
-categories: [Python, LLMs, OCR, MLX, Computer Vision, Tailscale]
+categories: [Python, LLMs, AI Safety, OCR, MLX, Computer Vision, Tailscale]
 image: images/hero-before-after.webp
 image-alt: "A Japanese tax form and its English translation side by side, with the same table layout"
 # Images used only in raw HTML (the slider) or as links still need copying into the site.

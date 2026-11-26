@@ -1,0 +1,250 @@
+---
+title: "Voice Commander: a local voice agent that can't be talked into harm"
+description: "A hands-free, fully offline voice assistant for macOS, built on the assumption that the language model, and anyone in the room, can't be trusted."
+date: 2026-11-26
+categories: [Python, LLMs, Agents, AI Safety, Speech, MLX, macOS]
+image: thumbnail.svg
+image-alt: "A sound wave passing through a shield"
+format:
+  html:
+    mermaid:
+      theme: neutral
+---
+
+[Local only]{.badge-status}
+
+::: {.content-hidden}
+TODO: repo link, only if the repository is made public.
+:::
+
+::: {.fact-strip}
+[Runs 100% locally]{.fact} [50 tools, each checked]{.fact} [473 tests]{.fact}
+[57 commits]{.fact}
+:::
+
+## The problem
+
+Voice Commander operates a Mac for someone who can't use their hands. You say "computer,
+open YouTube", "click the third one", "turn it up", "commit my changes", and it does it:
+opening sites, driving the browser, typing, clicking, adjusting volume, Wi-Fi and Bluetooth,
+and running terminal commands. Simple questions ("what's 70 Fahrenheit in Celsius?") it
+answers directly, without touching any tools.
+
+Every model runs on the laptop:
+
+- **Speech to text:** Whisper large-v3-turbo (`mlx-community/whisper-large-v3-turbo`,
+  about 1.6 GB) on the GPU through MLX, with Hugging Face forced offline. Downloading it is
+  the only step that ever goes online.
+- **The agent:** Qwen 3.8 27B (`qwen3.8:27b-mlx`, about 18 GB) served by Ollama on
+  `127.0.0.1`, using its native tool calling. Any local model that supports tool calling
+  can be swapped in with `--model`, but the client refuses any server that isn't on the
+  loopback address.
+- **Speech out:** macOS `say`, with three presets you can switch between by voice
+  ("computer, use the british voice"): a flat monotone by default, British and American. The
+  choice is remembered across restarts. Replies go in on stdin, never as an argument, so a
+  reply like "-o /tmp/x" can't turn into a `say` option.
+
+So commands and audio never leave the machine.
+
+A voice agent with control of a computer has an unusual threat model:
+
+- **Anyone or anything can speak.** A TV, a video the agent itself opened, a visitor.
+- **The model reads untrusted text.** Web pages, tab titles and terminal output can contain
+  instructions aimed at it.
+- **It holds remote-control rights.** macOS Accessibility and Automation permissions are,
+  in effect, permission to do anything a user could.
+
+So the design starts from one rule: **neither the model nor the microphone gets the final
+word on anything risky.**
+
+## Who is it talking to?
+
+Every utterance passes through a gate before the model sees it. A wake word has to *start*
+the utterance, so "I bought a new computer" on TV doesn't count. After the assistant
+replies, a short window accepts an answer without the wake word, so a plain "yes" can
+confirm something. Stop phrases work at any time. Everything else is dropped without being
+logged, and no audio is ever written to disk.
+
+Try it. This is a small JavaScript port of the real gate:
+
+```{ojs}
+//| echo: false
+examples = [
+  "computer, open YouTube",
+  "I bought a new computer last week",
+  "hey jarvis, turn the volume down",
+  "yes",
+  "computer",
+  "computer thank you for watching",
+  "OK stop everything right now"
+]
+viewof example = Inputs.select(examples, {label: "Example"})
+viewof utterance = Inputs.text({label: "Or type one", value: example, width: 360})
+viewof followUp = Inputs.toggle({label: "Just replied", value: false})
+```
+
+```{ojs}
+//| echo: false
+wakeWords = ["computer", "jarvis"]
+stopPhrases = ["stop everything", "emergency stop", "kill switch", "abort program", "halt program"]
+// Whisper's well-known inventions on silence or noise.
+hallucinations = new Set(["", "you", "thank you", "thanks", "thank you very much",
+  "thanks for watching", "thank you for watching", "bye", "bye bye", "please subscribe",
+  "subscribe", "like and subscribe", "so", "okay", "hmm", "um", "uh"])
+normalise = t => t.toLowerCase().replace(/[^\p{L}\p{N}_\s']/gu, " ").split(/\s+/).filter(Boolean).join(" ")
+wake = new RegExp(String.raw`^\W*(?:(?:hey|hi|ok|okay)\W+)?(?:${wakeWords.join("|")})\b\W*`, "i")
+
+function decide(text, followUpOpen) {
+  const norm = normalise(text)
+  const stop = stopPhrases.find(p => norm.includes(p))
+  if (stop) return {kind: "stop", why: `Contains the stop phrase "${stop}". Halts at once, addressed or not; a false stop is harmless.`}
+  const m = text.match(wake)
+  if (m) {
+    const rest = text.slice(m[0].length).trim()
+    if (hallucinations.has(normalise(rest)))
+      return {kind: "wake", why: "Wake word on its own (or followed by a typical Whisper hallucination). Chimes and waits for the command."}
+    return {kind: "command", text: rest, why: "Starts with a wake word. The rest goes to the model."}
+  }
+  if (followUpOpen && !hallucinations.has(norm))
+    return {kind: "command", text: text.trim(), why: "No wake word, but the follow-up window is open, so it's treated as a reply."}
+  const midSentence = wakeWords.some(w => norm.split(" ").includes(w))
+  return {kind: "ignore", why: midSentence
+    ? "A wake word appears, but not at the start. Dropped and not logged."
+    : "Not addressed to the assistant. Dropped and not logged."}
+}
+
+decision = decide(utterance, followUp)
+html`<div class="gate-result gate-${decision.kind}">
+  <strong>${decision.kind.toUpperCase()}</strong>${decision.text ? html` → <code>${decision.text}</code>` : ""}
+  <div>${decision.why}</div>
+</div>`
+```
+
+## The voice loop
+
+```{mermaid}
+flowchart TB
+  A["Microphone<br/>(echo-cancelled)"] --> B["Energy-based detector<br/>cuts audio into utterances"]
+  B --> C["Whisper on MLX<br/>(offline)"]
+  C --> D{"Its own<br/>voice?"}
+  D -- yes --> X["Drop"]
+  D -- no --> G{"Gate"}
+  G -- "stop phrase" --> K["Halt mid-turn"]
+  G -- ignore --> X
+  G -- command --> M["Local model<br/>(tool calling)"]
+  M --> P{"Policy<br/>checks"}
+  P -- refused --> R["Say why"]
+  P -- "needs a yes" --> Y["Read the action back,<br/>wait for an exact yes"]
+  P -- allowed --> T["Run the tool<br/>(fixed argv, no shell)"]
+  Y --> T
+  T --> S["Speak or show a short reply,<br/>open 8 s follow-up"]
+```
+
+You can interrupt it while it talks. The microphone and the assistant's voice share one
+`AVAudioEngine` with macOS voice processing on (the same echo canceller FaceTime uses). As
+a backstop, any transcript that matches what it's saying, or said in the last 2 seconds, is
+dropped, so its own voice can never become a command even if cancellation is imperfect. If
+voice processing can't start, it falls back to ignoring the microphone while it speaks.
+
+When you don't want it talking, "computer, voice off" (or muting the Mac) switches replies
+to a small panel in the corner of the screen that fades after a few seconds, and "dismiss"
+hides it. Confirmation questions are the exception: they're always spoken, and stay on
+screen for the full 30 seconds you have to answer, so you always know what you're saying
+yes to.
+
+## Treating the model as untrusted
+
+The model can only call the tools in one file, and every call is checked against its schema
+before anything runs. On top of that:
+
+**Tool results are data, not instructions.** Text from web pages, apps, files and the
+terminal comes back wrapped in a tag the model is told never to take orders from, and the
+wrapper can't be closed from inside:
+
+```python
+def _untrusted(name: str, result: str) -> str:
+    body = result.replace("<", "‹").replace(">", "›")
+    return f'<untrusted_tool_result tool="{name}">\n{body}\n</untrusted_tool_result>'
+```
+
+After two refusals the turn ends, so the model can't keep hunting for a workaround. After
+three minutes without a command the conversation is cleared, so old page text doesn't
+linger into a new request.
+
+**Confirmation is decided in code.** `git push`, `uv add`, clicking Send, Post, Buy or Pay,
+pressing Return in a messaging app and typing into password fields all need a spoken yes.
+The agent reads the action back, and the code, not the model, checks the next utterance:
+
+```python
+pending = self._take_pending()          # expires after 30 seconds
+if pending is not None:
+    if norm in YES:
+        return self._run_confirmed(pending)
+    self._log_tool(pending.name, pending.args, "cancelled")
+```
+
+The `confirmed` flag that unlocks the action isn't in any tool schema, so the model has no
+way to set it. Deleting is refused outright, and a yes never unlocks a refused action.
+
+**An allowlist for the terminal, because a denylist for a shell is a losing game.**
+Commands run as fixed argument lists, never through a shell, with a 20-second timeout.
+There's no `rm`, `mv`, `cp` or `sudo`, and no pipes, redirects, chaining or substitution.
+Git is limited to everyday subcommands, without forcing or deleting flags:
+
+```python
+for arg in args[1:]:
+    flag = arg.split("=", 1)[0]
+    if flag in GIT_BANNED_FLAGS:
+        raise ActionRefused(f"git {flag} can lose work, so it isn't allowed by voice")
+    if re.fullmatch(r"-[A-Za-z]{2,}", arg) and GIT_BANNED_SHORT & set(arg[1:]):
+        raise ActionRefused(f"git {arg} includes a forcing or deleting flag")
+```
+
+Clicks are refused when the target's label sounds destructive (Delete, Bin, Erase, Don't
+Save, Forget), and refused outright if the target can't be inspected. Disk Utility,
+Keychain Access, Script Editor, Automator and Shortcuts can't be opened by voice.
+
+Every command heard and every tool call (allowed, refused, confirmed or cancelled) is logged
+to a file only the user can read. "Stop everything" is matched before the model sees it,
+and a global hotkey (⌃⌥⌘S) stops it from anywhere.
+
+## Keeping permissions narrow
+
+Whatever app holds Accessibility and Automation, everything running inside it inherits
+them: every script, package install and coding agent in that terminal. So the permissions
+belong to a small Swift menu-bar app that launches the agent, not to Terminal, and the
+README walks through removing them from Terminal afterwards.
+
+The agent also avoids needing them at all where it can:
+
+| Task | Route that needs no Accessibility |
+|---|---|
+| Open a site, video or playlist | `open "https://…"` |
+| Volume | `osascript -e "set volume output volume 70"` |
+| Browser navigation | Brave's AppleScript dictionary |
+| Wi-Fi / Bluetooth | `networksetup`, `blueutil` |
+
+Simulated typing and clicking are the fallback: they're what a hands-free user ultimately
+needs, but they're the reason the app needs Accessibility in the first place.
+
+A `--dry-run` mode checks and shows every tool call without running it, and needs no
+permissions at all.
+
+## How it was built
+
+Test-driven throughout, red-green-refactor: 473 tests that run in under a second, in 57
+small commits. The policy layer is kept free of side effects so it's easy to test
+exhaustively, and the clock and model server are injected so timing and model replies can be faked. Python with uv,
+MLX Whisper for speech, Ollama for the model, AVFoundation through PyObjC for audio, and a
+Swift launcher for the menu-bar app.
+
+## Known gaps
+
+The safety rules are best-effort, and the README says so:
+
+- **Anyone can still speak.** A video the agent opened could say "computer, …" at the start
+  of a sentence, and anyone can answer inside the 8-second follow-up window. Echo
+  cancellation only removes the assistant's own voice. Speaker verification is the next step.
+- Keyboard shortcuts inside apps that delete (such as `#` in Gmail), Return on a focused
+  Delete button, and terminals inside editors such as VS Code aren't caught.
+- It needs an Apple Silicon Mac with about 32 GB of memory for the default model.

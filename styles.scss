@@ -240,6 +240,25 @@ body.quarto-dark .fact {
   color: lighten($primary, 30%);
 }
 
+// Voice Commander gate demo: the decision, coloured by kind.
+.gate-result {
+  margin: 0.75rem 0 1.5rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--gate, #{$primary});
+  border-radius: 0.25rem;
+  background: rgba($primary, 0.06);
+
+  div {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+.gate-command { --gate: #2e8540; }
+.gate-wake { --gate: #{$primary}; }
+.gate-stop { --gate: #c0392b; }
+.gate-ignore { --gate: #8a8a8a; }
+
 // Before/after slider: the "after" image sits on top, clipped to the right of the handle.
 // Without JavaScript it stays at a 50/50 split.
 .ba-slider {
